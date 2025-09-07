@@ -1,0 +1,42 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alert_rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Ingestion Service
+  - job_name: 'ingestion-service'
+    static_configs:
+      - targets: ['ingestion-service:8081']
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+    scrape_timeout: 5s
+
+  # Consumer Service
+  - job_name: 'consumer-service'
+    static_configs:
+      - targets: ['consumer-service:8082']
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+    scrape_timeout: 5s
+
+  # Query Service
+  - job_name: 'query-service'
+    static_configs:
+      - targets: ['query-service:8083']
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+    scrape_timeout: 5s

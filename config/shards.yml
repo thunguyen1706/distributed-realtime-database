@@ -1,0 +1,7 @@
+shards:
+  - id: 0
+    connectionString: "postgres://${PG_SHARD_USER}:${PG_SHARD_PASS}@localhost:5433/posts"
+  - id: 1
+    connectionString: "postgres://${PG_SHARD_USER}:${PG_SHARD_PASS}@localhost:5434/posts"
+  - id: 2
+    connectionString: "postgres://${PG_SHARD_USER}:${PG_SHARD_PASS}@localhost:5435/posts"

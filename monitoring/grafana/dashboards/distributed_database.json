@@ -1,0 +1,80 @@
+{
+    "dashboard": {
+      "id": null,
+      "title": "Distributed Database System",
+      "tags": ["distributed", "database", "kafka", "postgres"],
+      "timezone": "browser",
+      "refresh": "5s",
+      "time": {
+        "from": "now-15m",
+        "to": "now"
+      },
+      "panels": [
+        {
+          "id": 1,
+          "title": "HTTP Requests Rate",
+          "type": "stat",
+          "targets": [
+            {
+              "expr": "rate(http_requests_total[1m])",
+              "legendFormat": "{{service}} - {{endpoint}}"
+            }
+          ],
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+        },
+        {
+          "id": 2,
+          "title": "Database Writes",
+          "type": "stat", 
+          "targets": [
+            {
+              "expr": "rate(database_writes_total[1m])",
+              "legendFormat": "{{shard}} - {{table}}"
+            }
+          ],
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+        },
+        {
+          "id": 3,
+          "title": "Messages Processed",
+          "type": "graph",
+          "targets": [
+            {
+              "expr": "rate(messages_processed_total[1m])",
+              "legendFormat": "{{topic}} - {{status}}"
+            }
+          ],
+          "gridPos": {"h": 8, "w": 24, "x": 0, "y": 8}
+        },
+        {
+          "id": 4,
+          "title": "Query Response Time",
+          "type": "graph",
+          "targets": [
+            {
+              "expr": "histogram_quantile(0.95, rate(query_duration_seconds_bucket[5m]))",
+              "legendFormat": "95th percentile"
+            },
+            {
+              "expr": "histogram_quantile(0.50, rate(query_duration_seconds_bucket[5m]))",
+              "legendFormat": "50th percentile"
+            }
+          ],
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16}
+        },
+        {
+          "id": 5,
+          "title": "Service Health",
+          "type": "stat",
+          "targets": [
+            {
+              "expr": "up",
+              "legendFormat": "{{job}}"
+            }
+          ],
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16}
+        }
+      ],
+      "version": 1
+    }
+  }
